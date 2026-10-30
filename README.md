@@ -32,11 +32,7 @@ A repair agent that just guesses makes things worse: in our tests a naive fixer 
 
 Code acts. AI only diagnoses.
 
-```
-DETECT -> CONTAIN -> DIAGNOSE -> GATE A -> GATE B -> RECOVER -> VERIFY -> closed
-                                   |         |                    |
-                                   +---------+--------------------+--> HUMAN DECIDES (incident report with evidence)
-```
+![ReVive architecture](ReVive_architecture.png)
 
 1. **Detect** (deterministic, no LLM): business invariants such as every invoice accounted for and every payee account verified.
 2. **Contain**: affected payments are held before any repair.
@@ -47,9 +43,17 @@ DETECT -> CONTAIN -> DIAGNOSE -> GATE A -> GATE B -> RECOVER -> VERIFY -> closed
    - MEDIUM: roll back a vendor-sync batch, only with one cause and a passing dry run
    - HIGH: new bank details, resending while UNKNOWN, reversing a settled payment, never automatic
 6. **Recover**: permitted fixes only. A timeout is not a failure: ReVive asks the bank first and never resends blindly. The simulated bank rejects duplicate idempotency keys.
-7. **Verify**: the incident closes only when the business state is correct. At most 2 attempts, then a human gets an incident report (`incidents/INC-xxx.json`) with the evidence, the remaining causes and the actions not taken.
+7. **Verify**: the incident closes only when the business state is correct. At most 2 attempts, then a human gets an incident report (`INC-xxx.json`) with the evidence, the remaining causes and the actions not taken.
 
 If Gemini is slow or unavailable (12-second limit, one retry, a backup model), ReVive falls back to a saved answer and then to its rules. Both gates apply either way.
+
+The main demo shows how the same symptom can end three different ways:
+
+![Same symptom, three endings](F3_same_symptom_three_endings.png)
+
+A real timeline from the first demo, where invoices vanish without any error:
+
+![Incident timeline](F5_incident_timeline.png)
 
 ## Results
 
@@ -63,6 +67,12 @@ Three systems on identical faults: a **naive fixer** (same detection, then just 
 | Over-escalation | 0% / 0% | 0% / 0% | **0% / 0%** |
 
 On clear cases strong rules tie ReVive. On ambiguous evidence (for example a changed bank account that could be a sync bug or fraud) strong rules guess and act; ReVive escalated every one. Over-escalation is 0%, so ReVive is not safe simply by refusing to act. Held-out testing caught a real bug in ReVive (a rollback that repaired only some vendors); it was fixed and covered by a regression test, and `results_v1.json` keeps the run from before the fix.
+
+![Safety versus autonomy](F4_safety_vs_autonomy.png)
+
+Gate A was calibrated on 100 synthetic incidents: the true cause stayed in its set 95% of the time, against a 90% target.
+
+![Calibration](F6_calibration.png)
 
 ## Run it
 
@@ -104,8 +114,8 @@ python3 check_ai.py         # explains any connection problem and lists the mode
 | `serve.py`, `dash_api.py`, `dashboard.html` | The live dashboard |
 | `build_public.py`, `public.html` | The public dashboard with recorded runs |
 | `test_core.py`, `test_llm.py` | Tests |
-| `figures/` | Architecture diagram, D2 outcomes (F3) and D1 incident timeline (F5); `F4_safety_vs_autonomy.png` and `F6_calibration.png` are made by `charts.py` |
-| `incidents/` | Example incident reports written by ReVive |
+| `*.png` | The figures above: architecture, D2 outcomes (F3), D1 incident timeline (F5), and the charts made by `charts.py` (F4, F6) |
+| `INC-001.json`, `INC-002.json` | Example incident reports written by ReVive |
 | `llm_cache.json` | Saved real Gemini answers, replayed if the internet drops |
 
 ## Scope 
