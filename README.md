@@ -91,7 +91,7 @@ python3 check_ai.py         # explains any connection problem and lists the mode
 
 | File | What it does |
 |---|---|
-| `sim.py` | The failing system: scripted accounts-payable agents, vendor sync, event log, ledger, and a bank with a payment state machine and idempotency keys |
+| `sim.py` | The failing system: accounts-payable agents, vendor sync, event log, ledger, and a bank with a payment state machine and idempotency keys |
 | `scenarios.py` | Development failures and the three demos (D1 invisible failure, D2 same symptom with different causes, D3 the agent admits failure) |
 | `held_out.py` | The frozen held-out failures (H1–H7) |
 | `detect.py` | Business-invariant detection |
@@ -108,6 +108,10 @@ python3 check_ai.py         # explains any connection problem and lists the mode
 | `incidents/` | Example incident reports written by ReVive |
 | `llm_cache.json` | Saved real Gemini answers, replayed if the internet drops |
 
-## Scope of this prototype
+## Scope 
 
-Everything runs in a simulator with synthetic suppliers, invoices and a simulated bank, so every failure can be injected and repeated exactly. The agents in the failing system are scripted. No real money or bank data is used.
+- **Business process:** accounts payable, run by five AI agents: intake, matching, approval, payment and a nightly vendor sync.
+- **Failures covered:** month-end overload that silently drops invoices, supplier bank-account mismatches (sync bug or fraud), bank timeouts that leave a payment UNKNOWN, and repairs that silently fail.
+- **Evaluation:** 17 failure scenarios (10 development, 7 held-out and frozen before testing), 30 seeds each, three systems compared over 510 runs.
+- **Environment:** a reproducible simulation, so every failure can be injected and replayed exactly.
+- **AI:** Gemini gives a second opinion on diagnosis; every action stays behind the two deterministic gates.
