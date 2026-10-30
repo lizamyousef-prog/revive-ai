@@ -113,5 +113,20 @@
       "same sync_batch: SYNC-0042"
     ],
     "explanation": "Multiple vendors were affected in the same sync batch with truncated bank account patterns, pointing directly to a data-sync corruption bug."
+  },
+  "summary:a97a1fe3a8abaaca49aa6c835dbad2255f34ba8a": {
+    "summary": "ReVive paused because vendor V2 has a bank account that differs from the verified one, and the only fix would change bank details, which is never automatic. You should check the invoice INV-001 and investigate for a possibly fraudulent bank-account change."
+  },
+  "summary:92034f5d7691691f8ff7f5acd6c7793550cd3b01": {
+    "summary": "ReVive paused because 1 vendor has a bank account differing from the verified one, involving SAR 250,000 on invoice INV-001. ReVive stopped instead of fixing it because the evidence fits more than one cause, so it would not guess between a vendor-sync bug and a possibly fraudulent change. You should check the vendor's bank account details and recent changes."
+  },
+  "summary:761cbd4d0e5f43a4ee873cec59ddd535846b9071": {
+    "summary": "ReVive paused because 1 vendor has a bank account differing from the verified one, involving a recent change and a completely different account. ReVive stopped instead of fixing it because the only fix would change bank details, which is never automatic. You should check the vendor V5 and invoice INV-007 for a possibly fraudulent bank-account change."
+  },
+  "summary:4715d93c8bef6b15d4ed3edcf53ac7a949f51160": {
+    "summary": "Payment for INV-001 timed out and the result is unknown with SAR 40,000 at risk. ReVive stopped because its fixes did not verify within the attempt limit. You should check the payment state and bank timeout status."
+  },
+  "summary:9a639472ba05b899a36f694feb9db019a17ac299": {
+    "summary": "Three vendors have a bank account that differs from the verified one, involving SAR 93,000 at risk. ReVive stopped because its fixes did not verify within the attempt limit. You should check the vendor-sync bug that damaged bank accounts and the evidence that IBAN is a truncated copy of the verified one in the same sync batch."
   }
 }

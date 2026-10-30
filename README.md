@@ -50,6 +50,8 @@ Code acts. AI only diagnoses.
 
 If Gemini is slow or unavailable (12-second limit, one retry, a backup model), ReVive falls back to a saved answer and then to its rules. Both gates apply either way.
 
+**AI handoff note.** When ReVive hands a case to a person, Gemini also writes a short plain-language note: what happened, why ReVive stopped and what to check next. It sees only the facts from the incident report, and ReVive checks every number and ID in the note against those facts; if anything doesn't match, the note is rejected and a plain template is used instead. The note is written after the decision is made, so it can explain but never change it.
+
 The main demo shows how the same symptom can end three different ways:
 
 ![Same symptom, three endings](F3_same_symptom_three_endings.png)
@@ -84,6 +86,7 @@ Python 3.10 or newer. The core needs no installs. `charts.py` needs `matplotlib`
 ```
 python3 test_core.py        # 2,010 checks across 30 seeds and 10 scenarios
 python3 test_llm.py         # 44 checks of the AI step with fake answers (no internet needed)
+python3 test_summary.py     # 185 checks of the AI handoff note, including that decisions never change
 python3 run_demo.py         # every demo scenario as a plain-English report
 python3 evaluate.py         # the full evaluation above, saved to results.json
 python3 calibrate.py        # Gate A calibration, saved to calibration.json
@@ -110,13 +113,15 @@ python3 check_ai.py         # explains any connection problem and lists the mode
 | `detect.py` | Business-invariant detection |
 | `diagnose.py` | Rules diagnosis: a set of possible causes from a fixed fault list, with cited evidence |
 | `llm_diagnose.py` | Gemini second opinion, with timeout, retry, backup model and a saved-answer fallback |
+| `llm_summary.py` | The AI handoff note: Gemini writes it from the incident facts, ReVive fact-checks it, with a template fallback |
+| `record_summaries.py` | Saves real Gemini handoff notes so the public dashboard can show them |
 | `revive.py` | The recovery loop: contain, Gate A, Gate B, dry run, recover, verify, escalate, incident reports |
 | `baseline.py` | The naive fixer and the strong-rules monitor |
 | `evaluate.py` | Evaluation of the three systems on dev and held-out sets |
 | `calibrate.py`, `charts.py` | Gate A calibration and the result figures |
 | `serve.py`, `dash_api.py`, `dashboard.html` | The live dashboard |
 | `build_public.py`, `public.html` | The public dashboard with recorded runs |
-| `test_core.py`, `test_llm.py` | Tests |
+| `test_core.py`, `test_llm.py`, `test_summary.py` | Tests |
 | `*.png` | The figures above: architecture, D2 outcomes (F3), D1 incident timeline (F5), and the charts made by `charts.py` (F4, F6) |
 | `INC-001.json`, `INC-002.json` | Example incident reports written by ReVive |
 | `llm_cache.json` | Saved real Gemini answers, replayed if the internet drops |

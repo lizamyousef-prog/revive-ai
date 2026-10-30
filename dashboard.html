@@ -55,6 +55,10 @@
   .handoff{margin-top:12px;border:1px solid var(--amber);background:#2a2412;border-radius:10px;padding:12px;display:none}
   .handoff h3{margin:0 0 6px;font-size:14px;color:var(--amber)}
   .handoff ul{margin:6px 0 0 18px;padding:0} .handoff li{margin:2px 0}
+  .aisum{margin:4px 0 10px;padding:10px 12px;border-radius:8px;background:#1b2f39;border:1px solid #2fb5d0;color:var(--text);line-height:1.5}
+  .aisum .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#06222b;background:var(--teal);border-radius:999px;padding:2px 8px;margin-right:6px}
+  .aisum .tag.tpl{background:#8fa8b3}
+  .aisum p{margin:6px 0 4px} .aisum small{color:var(--mute)}
   .empty{color:var(--mute);padding:6px}
   .runbtn{width:100%;margin-top:6px;padding:12px;border-radius:9px;border:0;background:var(--teal);color:#06222b;font-weight:800;font-size:14px;cursor:pointer}
   .runbtn:disabled{opacity:.5;cursor:wait}
@@ -170,7 +174,10 @@ async function runSelected(){
 function showHandoff(inc){
   const e=inc.escalation, h=$("handoff");
   const li = a => a.map(x=>`<li>${esc(x)}</li>`).join("");
-  h.innerHTML = `<h3>⚠ Handoff to a human</h3>
+  const sm=e.ai_summary, ai=sm&&sm.source!=="template";
+  const lab=!sm?"":ai?(sm.source==="live"?"Gemini · live":"Gemini answer"):"ReVive summary";
+  const sumHtml=sm?`<div class="aisum"><span class="tag ${ai?"":"tpl"}">${lab}</span><b>${ai?"AI summary for the reviewer":"Summary for the reviewer"}</b><p>${esc(sm.text)}</p><small>${ai?"Written by Gemini from the incident facts only, then checked against them. It explains; it decided nothing. The details below are the source of truth.":"Written by ReVive from the incident facts ("+esc(sm.note)+")."}</small></div>`:"";
+  h.innerHTML = `<h3>⚠ Handoff to a human</h3>${sumHtml}
     <div><b>Why:</b> ${esc(e.reason)}</div>
     <div><b>Possible causes:</b> ${esc((e.possible_causes||[]).join(" or ")||"unknown")}</div>
     ${(e.cited_evidence||[]).length?`<div><b>Evidence:</b><ul>${li(e.cited_evidence)}</ul></div>`:""}

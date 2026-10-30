@@ -4,6 +4,7 @@ dash_api.py  -  Runs one scenario with one agent and returns plain data for the 
 from baseline import NaiveAgent
 from revive import Revive
 from llm_diagnose import make_llm_diagnoser, ai_available
+from llm_summary import make_summarizer
 import scenarios as S
 import held_out as H
 
@@ -29,7 +30,7 @@ def catalog():
 
 def run_case(key, agent_name, seed):
     label, story, fn = CASES[key]
-    agent = Revive(diagnoser=make_llm_diagnoser()) if agent_name == "revive" else NaiveAgent()
+    agent = Revive(diagnoser=make_llm_diagnoser(), summarizer=make_summarizer()) if agent_name == "revive" else NaiveAgent()
     sim, agent = fn(seed=seed, agent=agent)
 
     incidents = []

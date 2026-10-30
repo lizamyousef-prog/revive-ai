@@ -195,8 +195,9 @@ def verify(sim, finding):
 
 # ======================= the ReVive agent =======================
 class Revive:
-    def __init__(self, diagnoser=diagnose, save_dir=None):
+    def __init__(self, diagnoser=diagnose, save_dir=None, summarizer=None):
         self.diagnoser = diagnoser
+        self.summarizer = summarizer      # optional: writes a plain-language note for the human (never decides)
         self.save_dir = save_dir
         self.incidents = []
         self._n = 0
@@ -332,6 +333,11 @@ class Revive:
                               for a in inc["attempts"]],
             "still_held_invoices": inc["held_invoices"],
         }
+        if self.summarizer is not None:      # explanation only: the decision above is already final
+            try:
+                inc["escalation"]["ai_summary"] = self.summarizer(inc)
+            except Exception:
+                pass
         inc["timeline"].append({"stage": "ESCALATED", "tick": sim.tick_no, "note": reason})
         return self._finish(inc)
 

@@ -139,7 +139,7 @@ def ai_available():
     return bool(os.environ.get("GEMINI_API_KEY"))
 
 
-def make_llm_diagnoser():
+def make_llm_diagnoser(live=True):
     def diagnose(finding):
         base = rules_diagnose(finding)
         if finding["kind"] != "payee_iban_mismatch":
@@ -149,6 +149,8 @@ def make_llm_diagnoser():
                                       "evidence": finding["evidence"]}, indent=1)
         reply, source, err = None, None, "bad reply"
         try:
+            if not live:
+                raise NoKey("live calls switched off")
             reply, source = parse_reply(_call_model(prompt)), "live"
             cache = _load_cache()
             cache[fp] = reply
