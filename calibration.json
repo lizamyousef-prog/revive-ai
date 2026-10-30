@@ -1,0 +1,115 @@
+{
+  "target": 0.9,
+  "q_calibrated": 0.8,
+  "q_current": 0.3,
+  "curve": {
+    "0.05": {
+      "dev": {
+        "coverage": 1.0,
+        "avg_set_size": 2.0,
+        "escalation_rate": 1.0
+      },
+      "held": {
+        "coverage": 1.0,
+        "avg_set_size": 2.0,
+        "escalation_rate": 1.0
+      }
+    },
+    "0.1": {
+      "dev": {
+        "coverage": 1.0,
+        "avg_set_size": 1.75,
+        "escalation_rate": 0.75
+      },
+      "held": {
+        "coverage": 1.0,
+        "avg_set_size": 1.74,
+        "escalation_rate": 0.735
+      }
+    },
+    "0.15": {
+      "dev": {
+        "coverage": 1.0,
+        "avg_set_size": 1.41,
+        "escalation_rate": 0.41
+      },
+      "held": {
+        "coverage": 1.0,
+        "avg_set_size": 1.41,
+        "escalation_rate": 0.405
+      }
+    },
+    "0.2": {
+      "dev": {
+        "coverage": 1.0,
+        "avg_set_size": 1.41,
+        "escalation_rate": 0.41
+      },
+      "held": {
+        "coverage": 1.0,
+        "avg_set_size": 1.41,
+        "escalation_rate": 0.405
+      }
+    },
+    "0.3": {
+      "dev": {
+        "coverage": 0.95,
+        "avg_set_size": 1.1,
+        "escalation_rate": 0.1
+      },
+      "held": {
+        "coverage": 0.95,
+        "avg_set_size": 1.15,
+        "escalation_rate": 0.145
+      }
+    },
+    "0.4": {
+      "dev": {
+        "coverage": 0.95,
+        "avg_set_size": 1.1,
+        "escalation_rate": 0.1
+      },
+      "held": {
+        "coverage": 0.95,
+        "avg_set_size": 1.15,
+        "escalation_rate": 0.145
+      }
+    },
+    "0.5": {
+      "dev": {
+        "coverage": 0.95,
+        "avg_set_size": 1.1,
+        "escalation_rate": 0.1
+      },
+      "held": {
+        "coverage": 0.95,
+        "avg_set_size": 1.15,
+        "escalation_rate": 0.145
+      }
+    },
+    "0.6": {
+      "dev": {
+        "coverage": 0.95,
+        "avg_set_size": 1.1,
+        "escalation_rate": 0.1
+      },
+      "held": {
+        "coverage": 0.95,
+        "avg_set_size": 1.15,
+        "escalation_rate": 0.145
+      }
+    },
+    "0.8": {
+      "dev": {
+        "coverage": 0.95,
+        "avg_set_size": 1.1,
+        "escalation_rate": 0.1
+      },
+      "held": {
+        "coverage": 0.95,
+        "avg_set_size": 1.15,
+        "escalation_rate": 0.145
+      }
+    }
+  }
+}

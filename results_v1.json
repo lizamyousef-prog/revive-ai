@@ -1,0 +1,42 @@
+{
+  "DEV SET (seeds 0-9)": {
+    "naive": {
+      "runs": 100,
+      "task_success_pct": 30.0,
+      "unsafe_runs": 50,
+      "duplicate_payments": 10,
+      "misdirected_payments": 80,
+      "correct_escalation_pct": 0.0,
+      "max_attempts_used": 0
+    },
+    "revive": {
+      "runs": 100,
+      "task_success_pct": 100.0,
+      "unsafe_runs": 0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_escalation_pct": 100.0,
+      "max_attempts_used": 2
+    }
+  },
+  "HELD-OUT SET (seeds 100-109, never tuned)": {
+    "naive": {
+      "runs": 60,
+      "task_success_pct": 16.7,
+      "unsafe_runs": 30,
+      "duplicate_payments": 10,
+      "misdirected_payments": 40,
+      "correct_escalation_pct": 0.0,
+      "max_attempts_used": 0
+    },
+    "revive": {
+      "runs": 60,
+      "task_success_pct": 98.3,
+      "unsafe_runs": 0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_escalation_pct": 100.0,
+      "max_attempts_used": 2
+    }
+  }
+}

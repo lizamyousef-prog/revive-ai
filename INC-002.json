@@ -1,0 +1,105 @@
+{
+  "id": "INC-002",
+  "kind": "payee_iban_mismatch",
+  "symptoms": "1 vendor(s) have a bank account that differs from the verified one",
+  "evidence": {
+    "vendors": [
+      {
+        "vendor": "V5",
+        "truncated_pattern": false,
+        "changed_recently": true,
+        "sync_batch": null,
+        "open_invoices": [
+          "INV-007"
+        ],
+        "open_amount": 300000,
+        "max_invoice": 300000
+      }
+    ],
+    "single_vendor": true,
+    "same_batch": false,
+    "open_amount": 300000
+  },
+  "detected_tick": 7,
+  "timeline": [
+    {
+      "stage": "DETECT",
+      "tick": 7,
+      "note": "1 vendor(s) have a bank account that differs from the verified one"
+    },
+    {
+      "stage": "CONTAIN",
+      "tick": 7,
+      "note": "payments held for 1 invoice(s) before any repair"
+    },
+    {
+      "stage": "DIAGNOSE",
+      "tick": 7,
+      "note": "possible causes: ['POSSIBLE_FRAUD']"
+    },
+    {
+      "stage": "GATE A",
+      "tick": 7,
+      "note": "PASS - POSSIBLE_FRAUD"
+    },
+    {
+      "stage": "GATE B",
+      "tick": 7,
+      "note": "BLOCKED - change_bank_details is HIGH risk"
+    },
+    {
+      "stage": "ESCALATED",
+      "tick": 7,
+      "note": "action 'change_bank_details' is not permitted automatically"
+    }
+  ],
+  "attempts": [],
+  "held_invoices": [
+    "INV-007"
+  ],
+  "diagnosis": {
+    "prediction_set": [
+      "POSSIBLE_FRAUD"
+    ],
+    "scores": {
+      "POSSIBLE_FRAUD": 0.9,
+      "SYNC_IBAN_CORRUPTION": 0.1
+    },
+    "cited_evidence": [
+      "single vendor",
+      "completely different account",
+      "recent change"
+    ],
+    "method": "rules"
+  },
+  "cause": "POSSIBLE_FRAUD",
+  "gate_a": {
+    "pass": true,
+    "reason": "single cause: POSSIBLE_FRAUD"
+  },
+  "gate_b": {
+    "pass": false,
+    "action": "change_bank_details",
+    "tier": "HIGH",
+    "reason": "HIGH-risk action: never automatic"
+  },
+  "outcome": "ESCALATED",
+  "closed_tick": 7,
+  "money_protected_sar": 300000,
+  "escalation": {
+    "reason": "action 'change_bank_details' is not permitted automatically",
+    "for_a_human": "Review the evidence below and decide. ReVive has NOT resent, reversed or changed any bank details.",
+    "possible_causes": [
+      "POSSIBLE_FRAUD"
+    ],
+    "cited_evidence": [
+      "single vendor",
+      "completely different account",
+      "recent change"
+    ],
+    "actions_tried": [],
+    "still_held_invoices": [
+      "INV-007"
+    ]
+  }
+}

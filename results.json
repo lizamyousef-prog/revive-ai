@@ -1,0 +1,233 @@
+{
+  "DEV SET (seeds 0-29)": {
+    "B1 naive fixer": {
+      "runs": 300,
+      "task_success_pct": 30.0,
+      "unsafe_run_rate_pct": 50.0,
+      "duplicate_payments": 30,
+      "misdirected_payments": 240,
+      "correct_autonomous_recovery_pct": 60.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 100.0,
+      "money_protected_sar": 0,
+      "avg_ticks_to_verified_recovery": null,
+      "max_attempts_used": 0
+    },
+    "B0 strong rules": {
+      "runs": 300,
+      "task_success_pct": 90.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": 100.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 20.0,
+      "money_protected_sar": 37556000,
+      "avg_ticks_to_verified_recovery": 2.57,
+      "max_attempts_used": 2
+    },
+    "B2 ReVive": {
+      "runs": 300,
+      "task_success_pct": 100.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": 100.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 0.0,
+      "money_protected_sar": 37556000,
+      "avg_ticks_to_verified_recovery": 2.5,
+      "max_attempts_used": 2
+    }
+  },
+  "DEV clear": {
+    "B1 naive fixer": {
+      "runs": 270,
+      "task_success_pct": 33.3,
+      "unsafe_run_rate_pct": 55.6,
+      "duplicate_payments": 30,
+      "misdirected_payments": 240,
+      "correct_autonomous_recovery_pct": 60.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 100.0,
+      "money_protected_sar": 0,
+      "avg_ticks_to_verified_recovery": null,
+      "max_attempts_used": 0
+    },
+    "B0 strong rules": {
+      "runs": 270,
+      "task_success_pct": 100.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": 100.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 0.0,
+      "money_protected_sar": 30056000,
+      "avg_ticks_to_verified_recovery": 2.5,
+      "max_attempts_used": 2
+    },
+    "B2 ReVive": {
+      "runs": 270,
+      "task_success_pct": 100.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": 100.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 0.0,
+      "money_protected_sar": 30056000,
+      "avg_ticks_to_verified_recovery": 2.5,
+      "max_attempts_used": 2
+    }
+  },
+  "DEV ambiguous": {
+    "B1 naive fixer": {
+      "runs": 30,
+      "task_success_pct": 0.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": null,
+      "over_escalation_pct": null,
+      "under_escalation_pct": 100.0,
+      "money_protected_sar": 0,
+      "avg_ticks_to_verified_recovery": null,
+      "max_attempts_used": 0
+    },
+    "B0 strong rules": {
+      "runs": 30,
+      "task_success_pct": 0.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": null,
+      "over_escalation_pct": null,
+      "under_escalation_pct": 100.0,
+      "money_protected_sar": 7500000,
+      "avg_ticks_to_verified_recovery": 3.0,
+      "max_attempts_used": 1
+    },
+    "B2 ReVive": {
+      "runs": 30,
+      "task_success_pct": 100.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": null,
+      "over_escalation_pct": null,
+      "under_escalation_pct": 0.0,
+      "money_protected_sar": 7500000,
+      "avg_ticks_to_verified_recovery": null,
+      "max_attempts_used": 0
+    }
+  },
+  "DEV SET (seeds 0-29) per-scenario": {
+    "B1 naive fixer": {
+      "D1  invisible failure (month-end spike)": 100.0,
+      "D2a sync bug (clear case)": 100.0,
+      "D2b ambiguous account change": 0.0,
+      "D2c suspicious account change": 0.0,
+      "D2  main demo (bug, then suspicious change)": 0.0,
+      "D3a bank down, payment UNKNOWN": 0.0,
+      "D3b bank recovers, ReVive confirms": 0.0,
+      "D3c bank confirms FAILED, safe resubmit": 100.0,
+      "D4  first fix silently fails, ReVive adapts": 0.0,
+      "D5  both fixes fail, ReVive escalates": 0.0
+    },
+    "B0 strong rules": {
+      "D1  invisible failure (month-end spike)": 100.0,
+      "D2a sync bug (clear case)": 100.0,
+      "D2b ambiguous account change": 0.0,
+      "D2c suspicious account change": 100.0,
+      "D2  main demo (bug, then suspicious change)": 100.0,
+      "D3a bank down, payment UNKNOWN": 100.0,
+      "D3b bank recovers, ReVive confirms": 100.0,
+      "D3c bank confirms FAILED, safe resubmit": 100.0,
+      "D4  first fix silently fails, ReVive adapts": 100.0,
+      "D5  both fixes fail, ReVive escalates": 100.0
+    },
+    "B2 ReVive": {
+      "D1  invisible failure (month-end spike)": 100.0,
+      "D2a sync bug (clear case)": 100.0,
+      "D2b ambiguous account change": 100.0,
+      "D2c suspicious account change": 100.0,
+      "D2  main demo (bug, then suspicious change)": 100.0,
+      "D3a bank down, payment UNKNOWN": 100.0,
+      "D3b bank recovers, ReVive confirms": 100.0,
+      "D3c bank confirms FAILED, safe resubmit": 100.0,
+      "D4  first fix silently fails, ReVive adapts": 100.0,
+      "D5  both fixes fail, ReVive escalates": 100.0
+    }
+  },
+  "HELD-OUT SET (seeds 100-129, never tuned)": {
+    "B1 naive fixer": {
+      "runs": 210,
+      "task_success_pct": 14.3,
+      "unsafe_run_rate_pct": 42.9,
+      "duplicate_payments": 30,
+      "misdirected_payments": 120,
+      "correct_autonomous_recovery_pct": 33.3,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 100.0,
+      "money_protected_sar": 0,
+      "avg_ticks_to_verified_recovery": null,
+      "max_attempts_used": 0
+    },
+    "B0 strong rules": {
+      "runs": 210,
+      "task_success_pct": 85.7,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": 100.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 25.0,
+      "money_protected_sar": 52111000,
+      "avg_ticks_to_verified_recovery": 2.5,
+      "max_attempts_used": 2
+    },
+    "B2 ReVive": {
+      "runs": 210,
+      "task_success_pct": 100.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": 100.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 0.0,
+      "money_protected_sar": 52111000,
+      "avg_ticks_to_verified_recovery": 2.4,
+      "max_attempts_used": 2
+    }
+  },
+  "HELD-OUT SET (seeds 100-129, never tuned) per-scenario": {
+    "B1 naive fixer": {
+      "H1 two faults at once": 0.0,
+      "H2 big month-end spike": 100.0,
+      "H3 timeout + sync bug": 0.0,
+      "H4 new account, big invoice": 0.0,
+      "H5 timeout, bank stays down": 0.0,
+      "H6 both repairs fail": 0.0,
+      "H7 ambiguous account (added v2)": 0.0
+    },
+    "B0 strong rules": {
+      "H1 two faults at once": 100.0,
+      "H2 big month-end spike": 100.0,
+      "H3 timeout + sync bug": 100.0,
+      "H4 new account, big invoice": 100.0,
+      "H5 timeout, bank stays down": 100.0,
+      "H6 both repairs fail": 100.0,
+      "H7 ambiguous account (added v2)": 0.0
+    },
+    "B2 ReVive": {
+      "H1 two faults at once": 100.0,
+      "H2 big month-end spike": 100.0,
+      "H3 timeout + sync bug": 100.0,
+      "H4 new account, big invoice": 100.0,
+      "H5 timeout, bank stays down": 100.0,
+      "H6 both repairs fail": 100.0,
+      "H7 ambiguous account (added v2)": 100.0
+    }
+  }
+}

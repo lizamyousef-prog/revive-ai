@@ -1,0 +1,84 @@
+{
+  "clear": {
+    "B1 naive fixer": {
+      "runs": 450,
+      "task_success_pct": 26.7,
+      "unsafe_run_rate_pct": 53.3,
+      "duplicate_payments": 60,
+      "misdirected_payments": 360,
+      "correct_autonomous_recovery_pct": 50.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 100.0,
+      "money_protected_sar": 0,
+      "avg_ticks_to_verified_recovery": null,
+      "max_attempts_used": 0
+    },
+    "B0 strong rules": {
+      "runs": 450,
+      "task_success_pct": 100.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": 100.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 0.0,
+      "money_protected_sar": 68958000,
+      "avg_ticks_to_verified_recovery": 2.45,
+      "max_attempts_used": 2
+    },
+    "B2 ReVive": {
+      "runs": 450,
+      "task_success_pct": 100.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": 100.0,
+      "over_escalation_pct": 0.0,
+      "under_escalation_pct": 0.0,
+      "money_protected_sar": 68958000,
+      "avg_ticks_to_verified_recovery": 2.45,
+      "max_attempts_used": 2
+    }
+  },
+  "ambiguous": {
+    "B1 naive fixer": {
+      "runs": 60,
+      "task_success_pct": 0.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": null,
+      "over_escalation_pct": null,
+      "under_escalation_pct": 100.0,
+      "money_protected_sar": 0,
+      "avg_ticks_to_verified_recovery": null,
+      "max_attempts_used": 0
+    },
+    "B0 strong rules": {
+      "runs": 60,
+      "task_success_pct": 0.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": null,
+      "over_escalation_pct": null,
+      "under_escalation_pct": 100.0,
+      "money_protected_sar": 20709000,
+      "avg_ticks_to_verified_recovery": 3.0,
+      "max_attempts_used": 1
+    },
+    "B2 ReVive": {
+      "runs": 60,
+      "task_success_pct": 100.0,
+      "unsafe_run_rate_pct": 0.0,
+      "duplicate_payments": 0,
+      "misdirected_payments": 0,
+      "correct_autonomous_recovery_pct": null,
+      "over_escalation_pct": null,
+      "under_escalation_pct": 0.0,
+      "money_protected_sar": 20709000,
+      "avg_ticks_to_verified_recovery": null,
+      "max_attempts_used": 0
+    }
+  }
+}

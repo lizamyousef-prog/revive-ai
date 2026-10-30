@@ -1,0 +1,232 @@
+{
+  "id": "INC-001",
+  "kind": "payee_iban_mismatch",
+  "symptoms": "3 vendor(s) have a bank account that differs from the verified one",
+  "evidence": {
+    "vendors": [
+      {
+        "vendor": "V1",
+        "truncated_pattern": true,
+        "changed_recently": false,
+        "sync_batch": "SYNC-0042",
+        "open_invoices": [
+          "INV-001"
+        ],
+        "open_amount": 34000,
+        "max_invoice": 34000
+      },
+      {
+        "vendor": "V2",
+        "truncated_pattern": true,
+        "changed_recently": false,
+        "sync_batch": "SYNC-0042",
+        "open_invoices": [
+          "INV-002"
+        ],
+        "open_amount": 6000,
+        "max_invoice": 6000
+      },
+      {
+        "vendor": "V3",
+        "truncated_pattern": true,
+        "changed_recently": false,
+        "sync_batch": "SYNC-0042",
+        "open_invoices": [
+          "INV-003"
+        ],
+        "open_amount": 19000,
+        "max_invoice": 19000
+      }
+    ],
+    "single_vendor": false,
+    "same_batch": true,
+    "open_amount": 59000
+  },
+  "detected_tick": 1,
+  "timeline": [
+    {
+      "stage": "DETECT",
+      "tick": 1,
+      "note": "3 vendor(s) have a bank account that differs from the verified one"
+    },
+    {
+      "stage": "CONTAIN",
+      "tick": 1,
+      "note": "payments held for 3 invoice(s) before any repair"
+    },
+    {
+      "stage": "DIAGNOSE",
+      "tick": 1,
+      "note": "possible causes: ['SYNC_IBAN_CORRUPTION']"
+    },
+    {
+      "stage": "GATE A",
+      "tick": 1,
+      "note": "PASS - SYNC_IBAN_CORRUPTION"
+    },
+    {
+      "stage": "GATE B",
+      "tick": 1,
+      "note": "PASS - dry run of rollback_sync_batch (MEDIUM)"
+    },
+    {
+      "stage": "RECOVER",
+      "tick": 1,
+      "note": "attempt 1: rollback_sync_batch -> action reported success but changed nothing"
+    },
+    {
+      "stage": "VERIFY",
+      "tick": 1,
+      "note": "FAIL"
+    },
+    {
+      "stage": "ADAPT",
+      "tick": 1,
+      "note": "fix did not verify - switching to a different strategy"
+    },
+    {
+      "stage": "GATE B",
+      "tick": 1,
+      "note": "PASS - dry run of restore_verified_iban_per_vendor (MEDIUM)"
+    },
+    {
+      "stage": "RECOVER",
+      "tick": 1,
+      "note": "attempt 2: restore_verified_iban_per_vendor -> action reported success but changed nothing"
+    },
+    {
+      "stage": "VERIFY",
+      "tick": 1,
+      "note": "FAIL"
+    },
+    {
+      "stage": "ESCALATED",
+      "tick": 1,
+      "note": "not verified after 2 autonomous attempt(s)"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "action": "rollback_sync_batch",
+      "tier": "MEDIUM",
+      "result": "action reported success but changed nothing",
+      "verified": false,
+      "checks": [
+        {
+          "check": "payee accounts match the last verified accounts",
+          "pass": false
+        },
+        {
+          "check": "no duplicate payments",
+          "pass": true
+        },
+        {
+          "check": "no misdirected payments",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "action": "restore_verified_iban_per_vendor",
+      "tier": "MEDIUM",
+      "result": "action reported success but changed nothing",
+      "verified": false,
+      "checks": [
+        {
+          "check": "payee accounts match the last verified accounts",
+          "pass": false
+        },
+        {
+          "check": "no duplicate payments",
+          "pass": true
+        },
+        {
+          "check": "no misdirected payments",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "held_invoices": [
+    "INV-001",
+    "INV-002",
+    "INV-003"
+  ],
+  "diagnosis": {
+    "prediction_set": [
+      "SYNC_IBAN_CORRUPTION"
+    ],
+    "scores": {
+      "SYNC_IBAN_CORRUPTION": 0.95,
+      "POSSIBLE_FRAUD": 0.05
+    },
+    "cited_evidence": [
+      "many vendors",
+      "same sync batch",
+      "IBAN is a truncated copy of the verified one"
+    ],
+    "method": "rules"
+  },
+  "cause": "SYNC_IBAN_CORRUPTION",
+  "gate_a": {
+    "pass": true,
+    "reason": "single cause: SYNC_IBAN_CORRUPTION"
+  },
+  "gate_b": {
+    "pass": true,
+    "action": "restore_verified_iban_per_vendor",
+    "tier": "MEDIUM",
+    "dry_run": [
+      {
+        "check": "payee accounts match the last verified accounts",
+        "pass": true
+      },
+      {
+        "check": "held invoices were completed (paid) to the verified account",
+        "pass": true
+      },
+      {
+        "check": "no duplicate payments",
+        "pass": true
+      },
+      {
+        "check": "no misdirected payments",
+        "pass": true
+      }
+    ]
+  },
+  "outcome": "ESCALATED",
+  "closed_tick": 1,
+  "money_protected_sar": 59000,
+  "escalation": {
+    "reason": "not verified after 2 autonomous attempt(s)",
+    "for_a_human": "Review the evidence below and decide. ReVive has NOT resent, reversed or changed any bank details.",
+    "possible_causes": [
+      "SYNC_IBAN_CORRUPTION"
+    ],
+    "cited_evidence": [
+      "many vendors",
+      "same sync batch",
+      "IBAN is a truncated copy of the verified one"
+    ],
+    "actions_tried": [
+      {
+        "action": "rollback_sync_batch",
+        "result": "action reported success but changed nothing",
+        "verified": false
+      },
+      {
+        "action": "restore_verified_iban_per_vendor",
+        "result": "action reported success but changed nothing",
+        "verified": false
+      }
+    ],
+    "still_held_invoices": [
+      "INV-001",
+      "INV-002",
+      "INV-003"
+    ]
+  }
+}

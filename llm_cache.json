@@ -1,0 +1,117 @@
+{
+  "71afd77d35e259b48b833577dfabafc6970e6f09": {
+    "scores": {
+      "POSSIBLE_FRAUD": 0.9,
+      "UNKNOWN_OTHER": 0.1,
+      "INTAKE_DROP": 0.0,
+      "SYNC_IBAN_CORRUPTION": 0.0,
+      "BANK_TIMEOUT_UNKNOWN": 0.0
+    },
+    "cited_evidence": [
+      "1 vendor(s) have a bank account that differs from the verified one",
+      "changed_recently: true",
+      "single_vendor: true",
+      "open_amount: 250000"
+    ],
+    "explanation": "A single vendor had their bank account recently changed prior to a large invoice, which strongly indicates a targeted payee account replacement."
+  },
+  "eb93c333d4f0b994e1d6bc44656f43c94a6ef4b2": {
+    "scores": {
+      "SYNC_IBAN_CORRUPTION": 1.0,
+      "INTAKE_DROP": 0.0,
+      "POSSIBLE_FRAUD": 0.0,
+      "BANK_TIMEOUT_UNKNOWN": 0.0,
+      "UNKNOWN_OTHER": 0.0
+    },
+    "cited_evidence": [
+      "3 vendor(s) have a bank account that differs from the verified one",
+      "truncated_pattern: true",
+      "same_batch: true",
+      "sync_batch: SYNC-0042"
+    ],
+    "explanation": "Multiple vendors show truncated IBAN patterns within the exact same sync batch, which points directly to a data synchronization bug."
+  },
+  "29748de8b441dc80cae76062abb1db2f21b2b837": {
+    "scores": {
+      "POSSIBLE_FRAUD": 0.9,
+      "UNKNOWN_OTHER": 0.1
+    },
+    "cited_evidence": [
+      "1 vendor(s) have a bank account that differs from the verified one",
+      "changed_recently: true",
+      "open_amount: 300000"
+    ],
+    "explanation": "The bank account for a single vendor was recently changed and is now associated with a large open invoice, which strongly suggests possible fraud rather than a bulk system glitch."
+  },
+  "5f8a6b233c74eff11d0fc708c1a7a47b0f29fc5d": {
+    "scores": {
+      "INTAKE_DROP": 0.0,
+      "SYNC_IBAN_CORRUPTION": 1.0,
+      "POSSIBLE_FRAUD": 0.0,
+      "BANK_TIMEOUT_UNKNOWN": 0.0,
+      "UNKNOWN_OTHER": 0.0
+    },
+    "cited_evidence": [
+      "3 vendor(s) have a bank account that differs from the verified one",
+      "truncated_pattern: true",
+      "sync_batch: SYNC-0042",
+      "same_batch: true"
+    ],
+    "explanation": "Multiple vendors across the same sync batch show truncated bank account patterns, which strongly points to a data-sync corruption bug rather than single-vendor fraud."
+  },
+  "561ae7c0a68d209cf39d1e168e5b0f6c24722e38": {
+    "scores": {
+      "SYNC_IBAN_CORRUPTION": 0.95,
+      "POSSIBLE_FRAUD": 0.05
+    },
+    "cited_evidence": [
+      "3 vendor(s) have a bank account that differs from the verified one",
+      "truncated_pattern: true",
+      "sync_batch: SYNC-0042",
+      "same_batch: true"
+    ],
+    "explanation": "Multiple vendors were affected simultaneously in the same sync batch with truncated bank account patterns, pointing strongly to a data-sync corruption bug rather than individual fraud."
+  },
+  "82d1a5294f70b39be1a9da14b52a56a735a30359": {
+    "scores": {
+      "SYNC_IBAN_CORRUPTION": 1.0,
+      "INTAKE_DROP": 0.0,
+      "POSSIBLE_FRAUD": 0.0,
+      "BANK_TIMEOUT_UNKNOWN": 0.0,
+      "UNKNOWN_OTHER": 0.0
+    },
+    "cited_evidence": [
+      "3 vendor(s) have a bank account that differs from the verified one",
+      "truncated_pattern: true",
+      "same_batch: true",
+      "sync_batch: SYNC-0042"
+    ],
+    "explanation": "Multiple vendors were affected in the exact same sync batch with truncated bank account patterns, pointing directly to a data-sync corruption bug."
+  },
+  "d50275317acd02f7d4c37bedbe461431b14ef38e": {
+    "scores": {
+      "INTAKE_DROP": 0.0,
+      "SYNC_IBAN_CORRUPTION": 0.95,
+      "POSSIBLE_FRAUD": 0.05,
+      "BANK_TIMEOUT_UNKNOWN": 0.0,
+      "UNKNOWN_OTHER": 0.0
+    },
+    "cited_evidence": [
+      "3 vendor(s) have a bank account that differs from the verified one",
+      "truncated_pattern: true",
+      "same_batch: true"
+    ],
+    "explanation": "Multiple vendors in the same sync batch show truncated bank account patterns, which points strongly to a data-sync corruption bug rather than isolated fraud."
+  },
+  "1934b5ff574d326e4723d5c6283a584d55741676": {
+    "scores": {
+      "SYNC_IBAN_CORRUPTION": 1.0
+    },
+    "cited_evidence": [
+      "3 vendor(s) affected",
+      "truncated_pattern: true",
+      "same sync_batch: SYNC-0042"
+    ],
+    "explanation": "Multiple vendors were affected in the same sync batch with truncated bank account patterns, pointing directly to a data-sync corruption bug."
+  }
+}

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReVive AI Dashboard</title>
+<style>
+  :root{
+    --bg:#0f1b21; --panel:#16262e; --panel2:#1b2f39; --line:#27414d; --text:#e8f1f4; --mute:#8fa8b3;
+    --teal:#2fb5d0; --green:#34c27a; --red:#ef5b52; --amber:#f0b429;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;border-bottom:1px solid var(--line)}
+  h1{font-size:20px;margin:0;letter-spacing:.2px}
+  h1 span{color:var(--teal)}
+  .sub{color:var(--mute);font-size:12px;margin-top:2px}
+  .pill{padding:7px 16px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.5px;border:1px solid var(--line);background:var(--panel)}
+  .pill.idle{color:var(--mute)} .pill.work{color:var(--amber);border-color:var(--amber)}
+  .pill.ok{color:var(--green);border-color:var(--green)} .pill.human{color:var(--amber);border-color:var(--amber);background:#2a2412}
+  .pill.bad{color:var(--red);border-color:var(--red);background:#2b1514}
+  main{display:grid;grid-template-columns:300px 1fr 340px;gap:16px;padding:16px 24px;align-items:start}
+  @media (max-width:1100px){main{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .card h2{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--mute);margin:0 0 10px}
+  .toggle{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+  .toggle button{padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--mute);font-weight:600;cursor:pointer}
+  .toggle button.on{color:#06222b;background:var(--teal);border-color:var(--teal)}
+  .toggle button.on.naive{background:var(--red);border-color:var(--red);color:#fff}
+  .case{display:block;width:100%;text-align:left;margin:0 0 7px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);color:var(--text);cursor:pointer;font-size:13px}
+  .case:hover{border-color:var(--teal)} .case.sel{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal) inset}
+  .case.held{border-style:dashed}
+  .case small{display:block;color:var(--mute);margin-top:2px;font-size:11px}
+  .strip{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .step{flex:1 1 90px;min-width:90px;text-align:center;padding:12px 4px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--mute);font-size:12px;font-weight:700;letter-spacing:.5px;transition:all .25s}
+  .step.pass{color:var(--green);border-color:var(--green);background:#12281d}
+  .step.fail{color:var(--red);border-color:var(--red);background:#2b1514}
+  .step.warn{color:var(--amber);border-color:var(--amber);background:#2a2412}
+  .step.now{box-shadow:0 0 0 2px var(--teal)}
+  .story{color:var(--mute);margin:4px 0 12px}
+  .log{height:300px;overflow:auto;background:#0c161b;border:1px solid var(--line);border-radius:9px;padding:10px;font:12.5px/1.5 ui-monospace,Menlo,Consolas,monospace}
+  .log div{padding:1px 0}
+  .tag{display:inline-block;min-width:78px;font-weight:700}
+  .t-pass{color:var(--green)} .t-fail{color:var(--red)} .t-warn{color:var(--amber)} .t-info{color:var(--teal)}
+  .incline{color:var(--text);font-weight:700;margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .kpi{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px}
+  .kpi b{display:block;font-size:22px} .kpi span{color:var(--mute);font-size:11px}
+  .kpi.good b{color:var(--green)} .kpi.bad{border-color:var(--red);background:#2b1514} .kpi.bad b{color:var(--red)}
+  .kpi.amber b{color:var(--amber)}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{color:var(--mute);text-align:left;font-weight:600;padding:4px 6px}
+  td{padding:5px 6px;border-top:1px solid var(--line)}
+  tr.wrong td{background:#2b1514;color:#ffb4ae} tr.dup td{background:#2a2412;color:#f6d68a}
+  .handoff{margin-top:12px;border:1px solid var(--amber);background:#2a2412;border-radius:10px;padding:12px;display:none}
+  .handoff h3{margin:0 0 6px;font-size:14px;color:var(--amber)}
+  .handoff ul{margin:6px 0 0 18px;padding:0} .handoff li{margin:2px 0}
+  .empty{color:var(--mute);padding:6px}
+  .runbtn{width:100%;margin-top:6px;padding:12px;border-radius:9px;border:0;background:var(--teal);color:#06222b;font-weight:800;font-size:14px;cursor:pointer}
+  .runbtn:disabled{opacity:.5;cursor:wait}
+  .note{color:var(--mute);font-size:11px;margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1><span>ReVive</span> AI &nbsp;·&nbsp; Accounts-Payable Recovery</h1>
+    <div class="sub">Simulated supplier-payment system. Synthetic data only: no real money moves. <span id="aiflag"></span></div>
+  </div>
+  <div id="status" class="pill idle">READY</div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Who is fixing it?</h2>
+    <div class="toggle">
+      <button id="aRevive" class="on" onclick="setAgent('revive')">ReVive</button>
+      <button id="aNaive" onclick="setAgent('naive')">Naive fixer</button>
+    </div>
+    <h2>Inject a failure</h2>
+    <div id="cases"></div>
+    <button id="run" class="runbtn" onclick="runSelected()">Run it</button>
+    <div class="note">Every run uses a fresh random seed. Dashed buttons are unseen tests that ReVive was not tuned on.</div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>The recovery loop</h2>
+      <div class="strip" id="strip"></div>
+      <div class="story" id="story">Pick a failure on the left, then press “Run it”.</div>
+      <div class="log" id="log"><div class="empty">The agent’s reasoning will appear here, step by step.</div></div>
+      <div class="handoff" id="handoff"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>What really happened</h2>
+      <div class="kpis" id="kpis"><div class="empty">Nothing yet.</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>Payments the bank actually made</h2>
+      <div id="pay"><div class="empty">Nothing yet.</div></div>
+    </div>
+  </section>
+</main>
+
+<script>
+const STEPS = ["DETECT","CONTAIN","DIAGNOSE","GATE A","GATE B","RECOVER","VERIFY","ADAPT","END"];
+let agent = "revive", cases = [], sel = null, busy = false;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const money = n => "SAR " + Number(n).toLocaleString();
+
+function setStatus(text, cls){ const s=$("status"); s.textContent=text; s.className="pill "+cls; }
+function drawStrip(){
+  $("strip").innerHTML = STEPS.map(s=>`<div class="step" data-s="${s}">${s==="END"?"RESULT":s}</div>`).join("");
+}
+function mark(stage, cls, now){
+  const k = (stage==="CLOSED"||stage==="ESCALATED") ? "END" : stage;
+  const el = document.querySelector(`.step[data-s="${k}"]`); if(!el) return;
+  document.querySelectorAll(".step.now").forEach(e=>e.classList.remove("now"));
+  el.classList.remove("pass","fail","warn"); el.classList.add(cls); if(now) el.classList.add("now");
+  if(k==="END") el.textContent = stage==="CLOSED" ? "VERIFIED ✓" : "HUMAN NEEDED";
+}
+function classify(stage, note){
+  if(stage==="CLOSED") return "pass";
+  if(stage==="ESCALATED") return "warn";
+  if(stage==="ADAPT") return "warn";
+  if(/FAIL|BLOCKED/.test(note)) return "fail";
+  if(stage==="CONTAIN") return "warn";
+  return "pass";
+}
+function setAgent(a){
+  agent=a; $("aRevive").className = a==="revive"?"on":""; $("aNaive").className = a==="naive"?"on naive":"";
+}
+function drawCases(){
+  $("cases").innerHTML = cases.map(c=>`<button class="case ${c.label.includes("unseen")?"held":""} ${sel===c.key?"sel":""}" onclick="pick('${c.key}')">${esc(c.label)}</button>`).join("");
+}
+function pick(k){ sel=k; drawCases(); const c=cases.find(x=>x.key===k); $("story").textContent=c.story; }
+
+async function runSelected(){
+  if(busy||!sel) { if(!sel) $("story").textContent="Pick a failure first."; return; }
+  busy=true; $("run").disabled=true;
+  drawStrip(); $("log").innerHTML=""; $("handoff").style.display="none";
+  $("kpis").innerHTML='<div class="empty">Running…</div>'; $("pay").innerHTML='<div class="empty">Running…</div>';
+  setStatus(agent==="revive"?"RECOVERING…":"NAIVE FIX RUNNING…","work");
+  const r = await (await fetch(`/api/run?case=${sel}&agent=${agent}&seed=${Math.floor(Math.random()*1000)}`)).json();
+  $("story").textContent = r.story;
+  for(const inc of r.incidents){
+    drawStrip();
+    $("log").insertAdjacentHTML("beforeend",`<div class="incline">${esc(inc.id)} · ${esc(inc.symptoms)}</div>`);
+    for(const t of inc.timeline){
+      const cls = classify(t.stage,t.note||"");
+      mark(t.stage, cls, true);
+      $("log").insertAdjacentHTML("beforeend",`<div><span class="tag t-${cls==="pass"?"pass":cls==="fail"?"fail":"warn"}">${esc(t.stage)}</span> ${esc(t.note||"")}</div>`);
+      $("log").scrollTop=$("log").scrollHeight;
+      await sleep(240);
+    }
+    if(inc.outcome==="ESCALATED" && inc.escalation) showHandoff(inc);
+    if(inc.outcome==="CLOSED_UNVERIFIED"){ mark("ESCALATED","fail",false); const e=document.querySelector('.step[data-s="END"]'); e.textContent="UNVERIFIED"; }
+    await sleep(150);
+  }
+  if(!r.incidents.length) $("log").innerHTML='<div class="empty">No incident raised.</div>';
+  drawResults(r);
+  busy=false; $("run").disabled=false;
+}
+
+function showHandoff(inc){
+  const e=inc.escalation, h=$("handoff");
+  const li = a => a.map(x=>`<li>${esc(x)}</li>`).join("");
+  h.innerHTML = `<h3>⚠ Handoff to a human</h3>
+    <div><b>Why:</b> ${esc(e.reason)}</div>
+    <div><b>Possible causes:</b> ${esc((e.possible_causes||[]).join(" or ")||"unknown")}</div>
+    ${(e.cited_evidence||[]).length?`<div><b>Evidence:</b><ul>${li(e.cited_evidence)}</ul></div>`:""}
+    ${(e.actions_tried||[]).length?`<div><b>Tried:</b><ul>${li(e.actions_tried.map(a=>a.action+" → "+(a.verified?"worked":"did not verify")))}</ul></div>`:""}
+    <div><b>Still safely held:</b> ${(e.still_held_invoices||[]).length} invoice(s) · <b>Money protected:</b> ${money(inc.money_protected)}</div>
+    <div style="margin-top:6px;color:#e8d9a8">${esc(e.for_a_human)}</div>`;
+  h.style.display="block";
+}
+
+function drawResults(r){
+  const unsafe = r.duplicates>0 || r.misdirected>0;
+  const esc2 = r.incidents.some(i=>i.outcome==="ESCALATED");
+  const okPaid = new Set(r.payments.filter(p=>p.right_account && !p.duplicate).map(p=>p.invoice)).size;
+  const protectedSar = r.incidents.reduce((a,i)=>a+(i.money_protected||0),0);
+  $("kpis").innerHTML = `
+    <div class="kpi"><b>${r.received}</b><span>invoices received</span></div>
+    <div class="kpi ${okPaid===r.received?"good":""}"><b>${okPaid}</b><span>paid correctly</span></div>
+    <div class="kpi ${r.held+r.unconfirmed+r.queued>0?"amber":""}"><b>${r.held+r.unconfirmed+r.queued}</b><span>held / waiting for a human</span></div>
+    <div class="kpi ${r.lost>0 && r.paid<r.received?"bad":""}"><b>${Math.max(0,r.received-r.paid-r.held-r.unconfirmed-r.queued)}</b><span>silently lost</span></div>
+    <div class="kpi ${r.duplicates?"bad":"good"}"><b>${r.duplicates}</b><span>duplicate payments</span></div>
+    <div class="kpi ${r.misdirected?"bad":"good"}"><b>${r.misdirected}</b><span>sent to wrong account</span></div>
+    ${agent==="revive"&&protectedSar?`<div class="kpi good" style="grid-column:span 2"><b>${money(protectedSar)}</b><span>money protected by ReVive</span></div>`:""}`;
+  $("pay").innerHTML = r.payments.length ? `<table><tr><th>Invoice</th><th>Vendor</th><th>Amount</th><th>Account</th></tr>`+
+    r.payments.map(p=>`<tr class="${!p.right_account?"wrong":p.duplicate?"dup":""}"><td>${p.invoice}</td><td>${p.vendor}</td><td>${p.amount.toLocaleString()}</td><td>${!p.right_account?"WRONG ACCOUNT":p.duplicate?"DUPLICATE":"correct"}</td></tr>`).join("")+`</table>`
+    : '<div class="empty">No payments were made.</div>';
+  if(agent==="naive") setStatus(unsafe?"UNSAFE: MONEY LOST":"CLOSED, UNVERIFIED", unsafe?"bad":"work");
+  else setStatus(esc2?"HUMAN ESCALATION":"RECOVERY VERIFIED", esc2?"human":"ok");
+}
+
+(async()=>{
+  drawStrip();
+  cases = await (await fetch("/api/cases")).json();
+  try{ const i = await (await fetch("/api/info")).json(); $("aiflag").textContent = i.ai ? "· AI diagnosis: ON" : "· AI diagnosis: OFF (rules only)"; }catch(e){}
+  drawCases();
+})();
+</script>
+</body>
+</html>
