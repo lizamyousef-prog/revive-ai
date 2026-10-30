@@ -1,9 +1,12 @@
 # ReVive AI
 
-**A safety and recovery layer for autonomous finance agents.**
-When AI agents run a company's payments, ReVive makes sure every invoice is paid **once**, to the **right account**, or a human knows exactly why not.
+AI agents are starting to run real business processes, including paying suppliers. When something breaks, they usually don't crash. They keep going, quietly paying an invoice twice or sending money to the wrong account.
 
-HUMAIN × Misk Future AI Builders Hackathon · Challenge 1 (Agentic Recovery of a Failing System) · Liza AlGhazal
+ReVive is a safety and recovery layer that sits between those agents and the money. It fixes what it is sure about, proves the fix worked, and when it isn't sure, it stops and hands a person the evidence.
+
+Every invoice paid once, to the right account, or a human knows exactly why not.
+
+Built by Liza AlGhazal for the HUMAIN × Misk Future AI Builders Hackathon, Challenge 1: Agentic Recovery of a Failing System.
 
 | | |
 |---|---|
