@@ -8,7 +8,7 @@ HUMAIN × Misk Future AI Builders Hackathon · Challenge 1 (Agentic Recovery of 
 | | |
 |---|---|
 | Live dashboard | https://revive-ai-dashboard.netlify.app |
-| Presentation | SLIDES_LINK |
+| Presentation | https://canva.link/l24yiy77yuwwk5v |
 | Demo video | VIDEO_LINK |
 
 ---
