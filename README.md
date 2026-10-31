@@ -12,7 +12,7 @@ Built by Liza AlGhazal for the HUMAIN × Misk Future AI Builders Hackathon, Chal
 |---|---|
 | Live dashboard | https://revive-ai-dashboard.netlify.app |
 | Presentation | https://canva.link/l24yiy77yuwwk5v |
-| Demo video | VIDEO_LINK |
+| Demo video | https://drive.google.com/file/d/1qcERwNCWZDp5l0VZ829-sCiDoo-qOGgT/view?usp=share_link |
 
 ---
 
